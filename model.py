@@ -181,6 +181,7 @@ with tf.Session() as sess:
     # and linearly combine their outputs to get the final prediction scores
 
     logits = tf.concat([spatial_features, motion_features, fusion_layer], axis=1)
+    logits = fc_layer("softmax", logits, (1224, C), "linear", 0.0, 0.001)
 
     # define loss function
     loss = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=labels)
